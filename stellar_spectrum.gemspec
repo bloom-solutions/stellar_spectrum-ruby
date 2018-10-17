@@ -35,7 +35,14 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "activesupport"
+  spec.add_dependency "gem_config"
+  spec.add_dependency "redis"
+  spec.add_dependency "stellar-sdk"
+
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "vcr"
+  spec.add_development_dependency "webmock"
 end

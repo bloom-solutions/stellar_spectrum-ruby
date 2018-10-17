@@ -1,0 +1,13 @@
+---
+# Leave as is if using `docker-compose up` to start redis
+redis_url: redis://localhost:6379
+
+sender_seed: I must be funded
+destination_address: GBFXPX3M7WTD7KIVFOBDSOSMPHCKF6OLT2U5FZD2365FWLBV4HLKZZBR
+
+payment_channel_seeds:
+  - seed 1 (must be funded already)
+  - seed 2 (must be funded already)
+  - seed 3 (must be funded already)
+
+horizon_url: https://horizon-testnet.stellar.bloomx.org
