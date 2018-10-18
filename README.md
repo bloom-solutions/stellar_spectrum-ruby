@@ -1,5 +1,7 @@
 # StellarSpectrum
 
+[![Build Status](https://travis-ci.com/bloom-solutions/stellar_spectrum-ruby.svg?branch=master)](https://travis-ci.com/bloom-solutions/stellar_spectrum-ruby)
+
 Use Stellar payment channels in Ruby with ease.
 
 ## Installation
