@@ -14,7 +14,7 @@ GIT
 PATH
   remote: .
   specs:
-    stellar_spectrum (0.1.0)
+    stellar_spectrum (0.2.0)
       activesupport
       gem_config
       redis
