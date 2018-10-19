@@ -16,9 +16,9 @@ module StellarSpectrum
   include GemConfig::Base
 
   with_configuration do
-    has :redis_url, classes: String
-    has :seeds, classes: Array
-    has :horizon_url, classes: String
+    has :redis_url, classes: [NilClass, String]
+    has :seeds, classes: [NilClass, Array]
+    has :horizon_url, classes: [NilClass, String]
     has :logger
   end
 
