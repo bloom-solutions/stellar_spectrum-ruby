@@ -1,5 +1,7 @@
 # StellarSpectrum
 
+[![Build Status](https://travis-ci.com/bloom-solutions/stellar_spectrum-ruby.svg?branch=master)](https://travis-ci.com/bloom-solutions/stellar_spectrum-ruby)
+
 Use Stellar payment channels in Ruby with ease.
 
 ## Installation
@@ -10,17 +12,12 @@ Add this line to your application's Gemfile:
 gem 'stellar_spectrum'
 ```
 
-When used in a multi-process environment (i.e. web workers, background workers) ensure Redis is available.
-
 ## Usage
 
 In an initializer:
 
 ```ruby
 StellarSpectrum.configure do |c|
-  # When redis_url is not set, the memory store will be used to keep track of what payment channels are available
-
-  # If you're running on a multi-process environment, like a web server and background workers, you should configure StellarSpectrum to use Redis to keep track of the locked payment channels.
   c.redis_url = "redis://redis"
 
   # Add as many seeds as you want. They must be funded, and are the source of transaction fees. The product of the time in seconds it takes to make a new ledger in Stellar and the number of transactions you want to be able to do per second is the number of Stellar seeds you should place here. For example:
@@ -52,9 +49,9 @@ The method below picks an available channel in the config's seeds.
 
 ```ruby
 spectrum.send_payment(
-  from: "SEED OF SOURCE OF BTC",
-  to: "ADDRESS OF DESTINATION",
-  amount: [1, :alphanum4, "BTC", "ISSUER"],
+  from: Stellar::Account.from_seed("seed of account that will send 30 XLM"),
+  to: Stellar::Account.from_address("destination address"),
+  amount: Stellar::Amount.new(30),
 )
 ```
 
