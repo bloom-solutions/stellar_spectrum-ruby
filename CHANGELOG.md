@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Do not require `redis_url`, `seeds`, `horizon_url` to be set in the gem's global config
+- Use the `to` keyword instead of `destination`
 
 ## [0.1.0] - 2018-10-19
 ### Added
