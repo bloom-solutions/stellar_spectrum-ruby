@@ -21,7 +21,7 @@ module StellarSpectrum
       self.logger = logger
     end
 
-    def send_payment(from:, destination:, amount:, memo: nil, tries: 0)
+    def send_payment(from:, to:, amount:, memo: nil, tries: 0)
       tries += 1
       available_channels = GetAvailableChannels.execute(
         redis: redis,
@@ -35,7 +35,7 @@ module StellarSpectrum
 
         return send_payment(
           from: from,
-          destination: destination,
+          to: to,
           amount: amount,
           memo: memo,
           tries: tries,
@@ -61,7 +61,7 @@ module StellarSpectrum
 
         return send_payment(
           from: from,
-          destination: destination,
+          to: to,
           amount: amount,
           memo: memo,
           tries: tries,
@@ -70,7 +70,7 @@ module StellarSpectrum
 
       stellar_client.send_payment(
         from: from,
-        to: destination,
+        to: to,
         amount: amount,
         memo: memo,
         channel_account: channel_account,

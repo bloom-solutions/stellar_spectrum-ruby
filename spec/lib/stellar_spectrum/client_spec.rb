@@ -23,7 +23,7 @@ module StellarSpectrum
 
       tx = client.send_payment(
         from: from_account,
-        destination: destination_account,
+        to: destination_account,
         amount: Stellar::Amount.new(1),
         memo: "MOMO",
       )
@@ -49,7 +49,7 @@ module StellarSpectrum
 
       tx = client.send_payment(
         from: from_account,
-        destination: destination_account,
+        to: destination_account,
         amount: Stellar::Amount.new(1),
         memo: "MOMO",
       )
@@ -82,7 +82,7 @@ module StellarSpectrum
           Thread.new do
             client.send_payment(
               from: from_account,
-              destination: destination_account,
+              to: destination_account,
               amount: Stellar::Amount.new(1),
             )
           end
