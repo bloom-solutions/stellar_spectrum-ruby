@@ -73,7 +73,7 @@ module StellarSpectrum
         to: to,
         amount: amount,
         memo: memo,
-        channel_account: channel_account,
+        transaction_source: channel_account,
         sequence: next_sequence_number,
       )
     end
