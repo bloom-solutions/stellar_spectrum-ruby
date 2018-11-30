@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    stellar_spectrum (0.2.0)
+    stellar_spectrum (1.0.0)
       activesupport
       gem_config
       redis
