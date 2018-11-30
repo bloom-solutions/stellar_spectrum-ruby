@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Rely on latest changes in Bloom's [`clarify-payment-channel` branch](https://github.com/stellar/ruby-stellar-sdk/pull/46)
+- Use stellar-sdk => 0.6.0
 
 ## [0.2.0]
 ### Fixed
