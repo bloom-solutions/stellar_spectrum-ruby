@@ -105,7 +105,7 @@ module StellarSpectrum
     end
 
     def redis
-      @redis ||= InitRedis.execute(redis_url: self.redis_url)
+      @redis ||= InitRedis.execute(redis_url: self.redis_url).redis
     end
 
     def lock!(address, sequence_number:)

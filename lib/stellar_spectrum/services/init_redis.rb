@@ -1,8 +1,12 @@
 module StellarSpectrum
   class InitRedis
 
-    def self.execute(redis_url:)
-      Redis.new(redis_url: redis_url)
+    extend LightService::Action
+    expects :redis_url
+    promises :redis
+
+    executed do |c|
+      c.redis = Redis.new(redis_url: c.redis_url)
     end
 
   end
