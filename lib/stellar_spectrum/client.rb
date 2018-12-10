@@ -118,7 +118,9 @@ module StellarSpectrum
     end
 
     def locked_accounts
-      GetLockedAccounts.execute(redis: redis, channel_accounts: channel_accounts)
+      GetLockedAccounts
+        .execute(redis: redis, channel_accounts: channel_accounts)
+        .locked_accounts
     end
 
     def stellar_client

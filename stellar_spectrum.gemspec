@@ -39,6 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "gem_config"
   spec.add_dependency "redis"
   spec.add_dependency "stellar-sdk", ">= 0.6.0"
+  spec.add_dependency "light-service"
 
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"

@@ -1,4 +1,5 @@
 require "gem_config"
+require "light-service"
 require "stellar_spectrum/version"
 require "stellar_spectrum/client"
 require "stellar-sdk"

@@ -1,9 +1,16 @@
 module StellarSpectrum
   class GetLockedAccounts
 
+    extend LightService::Action
+    expects :redis, :channel_accounts
+    promises :locked_accounts
+
     REDIS_PTTL_KEY_NON_PRESENT = -2
 
-    def self.execute(redis:, channel_accounts:)
+    executed do |c|
+      redis = c.redis
+      channel_accounts = c.channel_accounts
+
       addresses = channel_accounts.map(&:address)
       address_keys = addresses.map {|a| GetKeyForAddress.execute(a) }
       redis_response = redis.multi do
@@ -15,7 +22,7 @@ module StellarSpectrum
       address_sequence_numbers = redis_response[0]
       address_pttls = redis_response[1..-1]
 
-      addresses.each_with_object({}).with_index do |(address, hash), i|
+      c.locked_accounts = addresses.each_with_object({}).with_index do |(address, hash), i|
         pttl = address_pttls[i]
 
         next if pttl == REDIS_PTTL_KEY_NON_PRESENT
