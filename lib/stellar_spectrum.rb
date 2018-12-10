@@ -11,6 +11,7 @@ require "stellar_spectrum/services/get_available_channels"
 require "stellar_spectrum/services/get_key_for_address"
 require "stellar_spectrum/services/get_locked_accounts"
 require "stellar_spectrum/services/init_redis"
+require "stellar_spectrum/services/init_stellar_client"
 
 module StellarSpectrum
 

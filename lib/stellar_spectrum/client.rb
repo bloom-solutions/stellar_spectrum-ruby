@@ -124,7 +124,9 @@ module StellarSpectrum
     end
 
     def stellar_client
-      @stellar_client ||= Stellar::Client.new(horizon: self.horizon_url)
+      @stellar_client ||= InitStellarClient
+        .execute(horizon_url: self.horizon_url)
+        .stellar_client
     end
 
     def redis
