@@ -3,12 +3,11 @@ module StellarSpectrum
     class AttemptRelease
 
       extend LightService::Organizer
-      def self.call(redis:, channel_accounts:, except_address:, horizon_url:)
+      def self.call(redis:, channel_accounts:, stellar_client:)
         result = with(
-          horizon_url: horizon_url,
+          stellar_client: stellar_client,
           redis: redis,
           channel_accounts: channel_accounts,
-          except_address: except_address,
         ).reduce(actions)
 
         if result.failure?
@@ -20,15 +19,14 @@ module StellarSpectrum
 
       def self.actions
         [
-          InitStellarClient,
           GetLockedAccounts,
-          GetAddressToUnlock,
+          GetAccountToUnlock,
           GetSequenceNumber,
           # Someone else may have unlocked it while we were taking
           # our sweet time fetching the sequence number, so fetch
           # the locked accounts again:
           GetLockedAccounts,
-          GetAddressInfo,
+          GetChannelAccountInfo,
           CheckSequenceNumber,
           Unlock,
         ]

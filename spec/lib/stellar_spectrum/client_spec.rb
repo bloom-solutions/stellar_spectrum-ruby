@@ -4,7 +4,8 @@ module StellarSpectrum
   RSpec.describe Client do
 
     let(:stellar_client) do
-      Stellar::Client.new(horizon: CONFIG[:horizon_url])
+      InitStellarClient.execute(horizon_url: CONFIG[:horizon_url])
+        .stellar_client
     end
     let(:from_account) { Stellar::Account.from_seed(CONFIG[:sender_seed]) }
     let(:destination_account) do
@@ -30,7 +31,7 @@ module StellarSpectrum
 
       tx_hash = tx._attributes["hash"]
 
-      tx = client.stellar_client.horizon.transaction(hash: tx_hash)
+      tx = stellar_client.horizon.transaction(hash: tx_hash)
       expect(tx.source_account).to_not eq from_account.address
 
       operation = tx.operations.records.first
@@ -56,7 +57,7 @@ module StellarSpectrum
 
       tx_hash = tx._attributes["hash"]
 
-      tx = client.stellar_client.horizon.transaction(hash: tx_hash)
+      tx = stellar_client.horizon.transaction(hash: tx_hash)
       expect(tx.memo).to eq "MOMO"
     end
 
