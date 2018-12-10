@@ -1,11 +1,16 @@
 module StellarSpectrum
   class GetAvailableChannels
 
-    def self.execute(redis:, locked_accounts:, channel_accounts:)
-      locked_addresses = locked_accounts.keys
-      channel_accounts.each_with_object([]) do |account, available_channels|
+    extend LightService::Action
+    expects :redis, :locked_accounts, :channel_accounts
+    promises :available_channels
+
+    executed do |c|
+      locked_addresses = c.locked_accounts.keys
+
+      c.available_channels = c.channel_accounts.each_with_object([]) do |account, channels|
         next if locked_addresses.include?(account.address)
-        available_channels << account
+        channels << account
       end
     end
 

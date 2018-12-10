@@ -27,7 +27,7 @@ module StellarSpectrum
         redis: redis,
         locked_accounts: locked_accounts,
         channel_accounts: channel_accounts,
-      )
+      ).available_channels
 
       if available_channels.empty?
         log "No available channels, retry for the #{tries.ordinalize} time..."
