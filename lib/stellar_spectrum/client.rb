@@ -79,42 +79,17 @@ module StellarSpectrum
     end
 
     def attempt_release_lock!(except_address: nil)
-      if logger
-        log_message =  "Attempting to release a lock"
-        if except_address.present?
-          log_message << "(except for address #{except_address})"
-        end
-        log log_message
-      end
-
-      address, address_info = locked_accounts.except(except_address).
-        sort_by {|address, info| info[:pttl]}.last
-
-      return false if address.nil?
-
-      current_sequence_number = current_sequence_number_for(address)
-      address_info = locked_accounts[address]
-
-      # Someone else may have unlocked it while we were taking our sweet
-      # time fetching the sequence number
-      return false if address_info.nil?
-
-      address_sequence_number = address_info[:sequence_number].to_i
-      if current_sequence_number < address_sequence_number
-        log "Not releasing #{address}: sequence number locked at " \
-          "#{address_sequence_number} is > current sequence number " \
-          "#{current_sequence_number}"
-        return false
-      end
-
-      log "Releasing #{address}: sequence number locked at " \
-        "#{address_sequence_number} is <= current sequence number " \
-        "#{current_sequence_number}"
-      unlock!(address)
+      Unlocking::AttemptRelease.(
+        horizon_url: self.horizon_url,
+        redis: self.redis,
+        channel_accounts: self.channel_accounts,
+        except_address: except_address,
+      )[:unlock_response]
     end
 
     def channel_accounts
-      @channel_accounts ||= seeds.map { |s| Stellar::Account.from_seed(s) }
+      @channel_accounts ||= GetChannelAccounts.execute(seeds: seeds).
+        channel_accounts
     end
 
     def locked_accounts
@@ -138,11 +113,6 @@ module StellarSpectrum
         nx: true,
         ex: MAX_LOCK_TIME_IN_SECONDS,
       })
-    end
-
-    def unlock!(address)
-      log "Unlocking address #{address}"
-      redis.del(GetKeyForAddress.execute(address))
     end
 
     def next_sequence_number_for(address_or_account)

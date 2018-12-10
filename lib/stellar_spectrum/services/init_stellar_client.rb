@@ -6,7 +6,7 @@ module StellarSpectrum
     promises :stellar_client
 
     executed do |c|
-      c.stellar_client = Stellar::Client.new(c.horizon_url)
+      c.stellar_client = Stellar::Client.new(horizon: c.horizon_url)
     end
 
   end
