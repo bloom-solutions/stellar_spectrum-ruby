@@ -21,7 +21,15 @@ module StellarSpectrum
       self.logger = logger
     end
 
-    def send_payment(from:, to:, amount:, memo: nil, tries: 0)
+    def send_payment(
+      from:,
+      to:,
+      amount:,
+      memo: nil,
+      tries: 0,
+      transaction_source: nil,
+      sequence: nil
+    )
       result = SendPayment.(
         from: from,
         to: to,
@@ -30,6 +38,8 @@ module StellarSpectrum
         seeds: seeds,
         redis_url: redis_url,
         horizon_url: horizon_url,
+        force_transaction_source: transaction_source,
+        force_sequence_number: sequence,
       )
 
       # if result.failure?

@@ -12,8 +12,8 @@ module StellarSpectrum
       seeds:,
       redis_url:,
       horizon_url:,
-      transaction_source: nil,
-      sequence: nil
+      force_transaction_source: nil,
+      force_sequence_number: nil
     )
       with(
         from: from,
@@ -24,8 +24,8 @@ module StellarSpectrum
         seeds: seeds,
         redis_url: redis_url,
         horizon_url: horizon_url,
-        transaction_source: transaction_source,
-        sequence_number: sequence
+        force_transaction_source: force_transaction_source,
+        force_sequence_number: force_sequence_number,
       ).reduce(actions)
     end
 
@@ -34,13 +34,16 @@ module StellarSpectrum
         IncrementTries,
         InitStellarClient,
         InitRedis,
-        reduce_if(->(c) {c[:transaction_source].nil?}, [
-          GetChannelAccounts,
+        GetChannelAccounts,
+        reduce_if(->(c) {c[:force_transaction_source].nil?}, [
           GetLockedAccounts,
           GetAvailableChannels,
           reduce_if(->(c) { c.available_channels.empty? }, retry_actions),
+          PickChannel,
         ]),
-        PickChannel,
+        reduce_if(->(c) {c[:force_transaction_source].present?}, [
+          execute(->(c) {c[:channel_account] = c[:force_transaction_source]}),
+        ]),
         GetSequenceNumber,
         LockChannel,
         reduce_if(->(c) {!c.successfully_locked}, retry_actions),

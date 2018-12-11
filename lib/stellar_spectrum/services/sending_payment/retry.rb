@@ -12,6 +12,8 @@ module StellarSpectrum
         seeds
         horizon_url
         redis_url
+        force_transaction_source
+        force_sequence_number
       ]
       expects *EXPECTS
       promises :send_asset_response

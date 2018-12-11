@@ -101,5 +101,54 @@ module StellarSpectrum
       WebMock.disable_net_connect!
     end
 
+    context "transaction_source and sequence are given" do
+      let(:channel_account) do
+        Stellar::Account.from_seed(seeds.first)
+      end
+      let(:seeds) do
+        # Return one seed so we can be sure the first time around we send the tx
+        # that we pick the only available seed
+        [CONFIG[:payment_channel_seeds].last]
+      end
+
+      it "uses the given transaction_source and sequence", vcr: {record: :once} do
+        client = described_class.new(
+          redis_url: CONFIG[:redis_url],
+          seeds: CONFIG[:payment_channel_seeds],
+          horizon_url: CONFIG[:horizon_url],
+          seeds: seeds,
+        )
+
+        next_sequence_number = GetSequenceNumber.execute(
+          stellar_client: stellar_client,
+          channel_account: channel_account,
+        ).next_sequence_number
+
+        tx_0 = client.send_payment(
+          from: from_account,
+          to: destination_account,
+          amount: Stellar::Amount.new(1),
+          memo: "MOMO",
+        )
+
+        expect(tx_0._response).to be_success
+        tx_0_hash = tx_0._attributes["hash"]
+
+        tx_1 = client.send_payment(
+          from: from_account,
+          to: destination_account,
+          amount: Stellar::Amount.new(1),
+          memo: "MOMO",
+          transaction_source: channel_account,
+          sequence: next_sequence_number,
+        )
+
+        expect(tx_1._response).to be_success
+        tx_1_hash = tx_1._attributes["hash"]
+
+        expect(tx_0_hash).to eq tx_1_hash
+      end
+    end
+
   end
 end

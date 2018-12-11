@@ -10,7 +10,7 @@ module StellarSpectrum
         amount
         memo
         channel_account
-        sequence_number
+        next_sequence_number
         stellar_client
       ]
 
@@ -25,7 +25,7 @@ module StellarSpectrum
           amount: c.amount,
           memo: c.memo,
           transaction_source: c.channel_account,
-          sequence: next_sequence_number,
+          sequence: c.next_sequence_number,
         )
       end
 

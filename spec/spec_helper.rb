@@ -25,6 +25,8 @@ RSpec.configure do |config|
 
   config.before :suite do
     FileUtils.mkdir_p TMP_DIR
+
+    LightService::Configuration.logger = Logger.new("tmp/test.log")
   end
 
   config.before :each do |c|
