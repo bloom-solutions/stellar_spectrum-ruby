@@ -11,7 +11,8 @@ module StellarSpectrum
       tries: 0,
       seeds:,
       redis_url:,
-      horizon_url: 
+      horizon_url:,
+      transaction_source: nil
     )
       with(
         from: from,
@@ -22,6 +23,7 @@ module StellarSpectrum
         seeds: seeds,
         redis_url: redis_url,
         horizon_url: horizon_url,
+        transaction_source: transaction_source,
       ).reduce(actions)
     end
 
@@ -30,10 +32,12 @@ module StellarSpectrum
         IncrementTries,
         InitStellarClient,
         InitRedis,
-        GetChannelAccounts,
-        GetLockedAccounts,
-        GetAvailableChannels,
-        reduce_if(->(c) { c.available_channels.empty? }, retry_actions),
+        reduce_if(->(c) {c[:transaction_source].nil?}, [
+          GetChannelAccounts,
+          GetLockedAccounts,
+          GetAvailableChannels,
+          reduce_if(->(c) { c.available_channels.empty? }, retry_actions),
+        ]),
         PickChannel,
         GetSequenceNumber,
         LockChannel,
