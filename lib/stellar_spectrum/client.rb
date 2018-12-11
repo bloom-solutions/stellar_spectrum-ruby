@@ -40,6 +40,7 @@ module StellarSpectrum
         horizon_url: horizon_url,
         force_transaction_source: transaction_source,
         force_sequence_number: sequence,
+        force_lock: false,
       )
 
       # if result.failure?

@@ -13,7 +13,8 @@ module StellarSpectrum
       redis_url:,
       horizon_url:,
       force_transaction_source: nil,
-      force_sequence_number: nil
+      force_sequence_number: nil,
+      force_lock: false
     )
       with(
         from: from,
@@ -26,6 +27,7 @@ module StellarSpectrum
         horizon_url: horizon_url,
         force_transaction_source: force_transaction_source,
         force_sequence_number: force_sequence_number,
+        force_lock: force_lock,
       ).reduce(actions)
     end
 
