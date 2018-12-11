@@ -12,7 +12,8 @@ module StellarSpectrum
       seeds:,
       redis_url:,
       horizon_url:,
-      transaction_source: nil
+      transaction_source: nil,
+      sequence: nil
     )
       with(
         from: from,
@@ -24,6 +25,7 @@ module StellarSpectrum
         redis_url: redis_url,
         horizon_url: horizon_url,
         transaction_source: transaction_source,
+        sequence_number: sequence
       ).reduce(actions)
     end
 
