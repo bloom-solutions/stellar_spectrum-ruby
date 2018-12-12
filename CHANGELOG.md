@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Fixed
+- [Make unlocking strategy safer](https://github.com/bloom-solutions/stellar_spectrum-ruby/pull/9)
+
 ## [1.1.0] - 2018-12-12
 ### Added
 - Retry when timeout is encountered [#6](https://github.com/bloom-solutions/stellar_spectrum-ruby/pull/6)
