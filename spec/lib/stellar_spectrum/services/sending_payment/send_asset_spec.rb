@@ -23,6 +23,11 @@ module StellarSpectrum
             channel_account: channel_account,
           }).next_sequence_number
         end
+        let(:seeds) do
+          CONFIG[:payment_channel_seeds].map do |seed|
+            Stellar::Account.from_seed(seed)
+          end
+        end
 
         it "sends out the asset", vcr: {record: :once} do
           expect(stellar_client).to receive(:send_payment).with(
@@ -42,6 +47,10 @@ module StellarSpectrum
             memo: "abc",
             channel_account: channel_account,
             next_sequence_number: next_sequence_number,
+            tries: 2,
+            seeds: seeds,
+            horizon_url: CONFIG[:horizon_url],
+            redis_url: CONFIG[:redis_url],
           )
 
           expect(result.send_asset_response._success?).to be true
@@ -54,6 +63,11 @@ module StellarSpectrum
         let(:amount) { Stellar::Amount.new(1) }
         let(:channel_account) do
           Stellar::Account.from_seed(CONFIG[:payment_channel_seeds].sample)
+        end
+        let(:seeds) do
+          CONFIG[:payment_channel_seeds].map do |seed|
+            Stellar::Account.from_seed(seed)
+          end
         end
         let(:timeout_error) do
           Faraday::ClientError.new(nil, {status: 504})
@@ -83,8 +97,13 @@ module StellarSpectrum
             to: to,
             amount: amount,
             memo: nil,
+            tries: 2,
+            seeds: seeds,
+            horizon_url: CONFIG[:horizon_url],
+            redis_url: CONFIG[:redis_url],
             force_transaction_source: channel_account,
             force_sequence_number: 1,
+            force_lock: true,
           ).and_return(retried_ctx)
 
           result = described_class.execute(
@@ -93,6 +112,10 @@ module StellarSpectrum
             to: to,
             amount: amount,
             memo: nil,
+            tries: 2,
+            seeds: seeds,
+            horizon_url: CONFIG[:horizon_url],
+            redis_url: CONFIG[:redis_url],
             channel_account: channel_account,
             next_sequence_number: 1,
           )
@@ -107,6 +130,11 @@ module StellarSpectrum
         let(:amount) { Stellar::Amount.new(1) }
         let(:channel_account) do
           Stellar::Account.from_seed(CONFIG[:payment_channel_seeds].sample)
+        end
+        let(:seeds) do
+          CONFIG[:payment_channel_seeds].map do |seed|
+            Stellar::Account.from_seed(seed)
+          end
         end
 
         it "returns the unsuccessful response", vcr: {record: :once} do
@@ -128,6 +156,10 @@ module StellarSpectrum
               memo: nil,
               channel_account: channel_account,
               next_sequence_number: 1,
+              tries: 2,
+              seeds: seeds,
+              horizon_url: CONFIG[:horizon_url],
+              redis_url: CONFIG[:redis_url],
             )
           end.to raise_error(Faraday::ClientError)
         end

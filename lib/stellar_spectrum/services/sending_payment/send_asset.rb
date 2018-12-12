@@ -13,6 +13,10 @@ module StellarSpectrum
         channel_account
         next_sequence_number
         stellar_client
+        tries
+        seeds
+        horizon_url
+        redis_url
       ]
 
       promises :send_asset_response
@@ -34,8 +38,13 @@ module StellarSpectrum
             to: c.to,
             amount: c.amount,
             memo: c.memo,
+            tries: c.tries,
+            seeds: c.seeds,
+            horizon_url: c.horizon_url,
+            redis_url: c.redis_url,
             force_transaction_source: c.channel_account,
             force_sequence_number: c.next_sequence_number,
+            force_lock: true,
           )
           c.send_asset_response = retry_result[:send_asset_response]
         else

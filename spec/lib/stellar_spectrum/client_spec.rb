@@ -150,5 +150,33 @@ module StellarSpectrum
       end
     end
 
+    context "sending payment times out" do
+      let(:channel_account) do
+        Stellar::Account.from_seed(seeds.first)
+      end
+
+      it "retries until it is able to send it" do
+        VCR.use_cassette(
+          "StellarSpectrum_Client/"\
+          "sending_payment_times_out/"\
+          "definition-account_info-post_tx_timeout_2x_then_success",
+        ) do
+          client = described_class.new(
+            redis_url: CONFIG[:redis_url],
+            seeds: CONFIG[:payment_channel_seeds],
+            horizon_url: CONFIG[:horizon_url],
+          )
+
+          result = client.send_payment(
+            from: from_account,
+            to: destination_account,
+            amount: Stellar::Amount.new(1),
+          )
+
+          expect(result._success?).to be true
+        end
+      end
+    end
+
   end
 end

@@ -14,6 +14,7 @@ module StellarSpectrum
         redis_url
         force_transaction_source
         force_sequence_number
+        force_lock
       ]
       expects *EXPECTS
       promises :send_asset_response
