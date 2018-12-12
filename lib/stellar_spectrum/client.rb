@@ -7,7 +7,7 @@ module StellarSpectrum
     attr_accessor :logger
 
     LOG_TAG = "[StellarSpectrum]"
-    MAX_LOCK_TIME_IN_SECONDS = 30
+    MAX_LOCK_TIME_IN_SECONDS = 120
 
     def initialize(
       redis_url: StellarSpectrum.configuration.redis_url,
