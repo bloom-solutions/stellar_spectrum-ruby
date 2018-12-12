@@ -18,8 +18,11 @@ module StellarSpectrum
       ]
       expects *EXPECTS
       promises :send_asset_response
+      WAIT_TIME_IN_SECONDS = 5
 
       executed do |c|
+        sleep WAIT_TIME_IN_SECONDS
+
         args = EXPECTS.each_with_object({}) do |attr, hash|
           hash[attr] = c.send(attr)
         end
@@ -32,7 +35,7 @@ module StellarSpectrum
         # fail_and_return for now until we figure out a way to stop all actions
         # from reduce_if
         # See https://github.com/adomokos/light-service/pull/164
-        message = "Closing try #{c.tries} (#{Thread.current})"
+        message = "Closing try #{c.tries}"
         c.fail_and_return! message
       end
 
