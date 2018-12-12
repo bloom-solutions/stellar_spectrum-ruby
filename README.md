@@ -61,6 +61,14 @@ When another transaction is created, an available (unlocked) payment channel wil
 
 If all payment channels are unavailable (locked), then the call will block the Ruby process/thread until a channel is available. Therefore, unless you have way more channels than you will ever consume, we strongly recommend you send transactions in a background worker like Sidekiq.
 
+#### Retries
+
+When the call to Horizon [times out](https://www.stellar.org/developers/horizon/reference/errors/timeout.html), we do not know whether or not the asset was sent.
+
+Because there are many payment channels to choose from, and each channel has their own sequence number, it would be complicated to control it from outside the gem. Therefore, this gem will retry for you. When a timeout is encountered the same channel and the same sequence number will be used to retry, as suggested in the Stellar docs.
+
+If the response is successful, the gem will mark the request as successful, and return the response.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
