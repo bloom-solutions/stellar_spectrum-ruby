@@ -26,7 +26,6 @@ module StellarSpectrum
       to:,
       amount:,
       memo: nil,
-      tries: 0,
       transaction_source: nil,
       sequence: nil
     )
