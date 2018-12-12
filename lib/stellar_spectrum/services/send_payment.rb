@@ -40,7 +40,7 @@ module StellarSpectrum
         reduce_if(->(c) {c[:force_transaction_source].nil?}, [
           GetLockedAccounts,
           GetAvailableChannels,
-          reduce_if(->(c) { c.available_channels.empty? }, retry_actions),
+          reduce_if(->(c) {c.available_channels.empty?}, SendingPayment::Retry),
           PickChannel,
         ]),
         reduce_if(->(c) {c[:force_transaction_source].present?}, [
@@ -48,15 +48,9 @@ module StellarSpectrum
         ]),
         GetSequenceNumber,
         LockChannel,
-        reduce_if(->(c) {!c.successfully_locked}, retry_actions),
+        reduce_if(->(c) {!c.successfully_locked}, SendingPayment::Retry),
         SendingPayment::SendAsset,
-      ]
-    end
-
-    def self.retry_actions
-      [
-        SendingPayment::AttemptReleaseLock,
-        SendingPayment::Retry,
+        Unlock,
       ]
     end
 
