@@ -14,7 +14,6 @@ module StellarSpectrum
         ).reduce(actions)
 
         if result.failure?
-          puts "Failed to unlock, retry..."
           sleep WAIT_TIME_IN_SECONDS
           result = self.(
             stellar_client: stellar_client,

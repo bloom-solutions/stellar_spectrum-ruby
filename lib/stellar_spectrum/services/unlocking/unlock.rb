@@ -8,7 +8,6 @@ module StellarSpectrum
 
       executed do |c|
         address_key = GetKeyForAddress.execute(c.channel_account.address)
-        puts "Will unlock #{address_key}"
         c.unlock_response = c.redis.del(address_key)
       end
 
