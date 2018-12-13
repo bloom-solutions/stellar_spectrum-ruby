@@ -701,4 +701,109 @@ http_interactions:
     http_version: 
   recorded_at: Tue, 11 Dec 2018 12:46:37 GMT
 
+# Fetch info to unlock (to actually unlock it must be the same as the last used sequence)
+- request:
+    method: get
+    uri: https://horizon-testnet.stellar.bloomx.org/accounts/GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept:
+      - application/hal+json,application/problem+json,application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0
+      Content-Disposition:
+      - inline
+      Content-Type:
+      - application/hal+json; charset=utf-8
+      Date:
+      - Tue, 11 Dec 2018 12:46:27 GMT
+      Vary:
+      - Origin
+      X-Ratelimit-Limit:
+      - '1576000'
+      X-Ratelimit-Remaining:
+      - '1575925'
+      X-Ratelimit-Reset:
+      - '2523'
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "_links": {
+            "self": {
+              "href": "https://horizon-testnet.stellar.bloomx.org:443/accounts/GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4"
+            },
+            "transactions": {
+              "href": "https://horizon-testnet.stellar.bloomx.org:443/accounts/GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4/transactions{?cursor,limit,order}",
+              "templated": true
+            },
+            "operations": {
+              "href": "https://horizon-testnet.stellar.bloomx.org:443/accounts/GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4/operations{?cursor,limit,order}",
+              "templated": true
+            },
+            "payments": {
+              "href": "https://horizon-testnet.stellar.bloomx.org:443/accounts/GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4/payments{?cursor,limit,order}",
+              "templated": true
+            },
+            "effects": {
+              "href": "https://horizon-testnet.stellar.bloomx.org:443/accounts/GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4/effects{?cursor,limit,order}",
+              "templated": true
+            },
+            "offers": {
+              "href": "https://horizon-testnet.stellar.bloomx.org:443/accounts/GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4/offers{?cursor,limit,order}",
+              "templated": true
+            },
+            "trades": {
+              "href": "https://horizon-testnet.stellar.bloomx.org:443/accounts/GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4/trades{?cursor,limit,order}",
+              "templated": true
+            },
+            "data": {
+              "href": "https://horizon-testnet.stellar.bloomx.org:443/accounts/GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4/data/{key}",
+              "templated": true
+            }
+          },
+          "id": "GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4",
+          "paging_token": "",
+          "account_id": "GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4",
+          "sequence": "927777360445611",
+          "subentry_count": 0,
+          "thresholds": {
+            "low_threshold": 0,
+            "med_threshold": 0,
+            "high_threshold": 0
+          },
+          "flags": {
+            "auth_required": false,
+            "auth_revocable": false
+          },
+          "balances": [
+            {
+              "balance": "9.9983000",
+              "buying_liabilities": "0.0000000",
+              "selling_liabilities": "0.0000000",
+              "asset_type": "native"
+            }
+          ],
+          "signers": [
+            {
+              "public_key": "GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4",
+              "weight": 1,
+              "key": "GCROLND2Z35J4LJU7OZQFY75UNGL6PZ37DEEBXZZNJGCVWQKIXL2CKM4",
+              "type": "ed25519_public_key"
+            }
+          ],
+          "data": {}
+        }
+    http_version: 
+  recorded_at: Tue, 11 Dec 2018 12:46:27 GMT
+
 recorded_with: VCR 4.0.0

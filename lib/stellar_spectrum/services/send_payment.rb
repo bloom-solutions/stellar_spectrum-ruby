@@ -50,7 +50,7 @@ module StellarSpectrum
         LockChannel,
         reduce_if(->(c) {!c.successfully_locked}, SendingPayment::Retry),
         SendingPayment::SendAsset,
-        Unlock,
+        SendingPayment::AttemptReleaseLock,
       ]
     end
 
