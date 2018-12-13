@@ -165,6 +165,42 @@ module StellarSpectrum
         end
       end
 
+      context "other Faraday::ClientError without a response method" do
+        let(:from) { Stellar::Account.from_seed(CONFIG[:sender_seed]) }
+        let(:to) { Stellar::Account.from_address(CONFIG[:destination_address]) }
+        let(:amount) { Stellar::Amount.new(1) }
+        let(:channel_account) do
+          Stellar::Account.from_seed(CONFIG[:payment_channel_seeds].sample)
+        end
+        let(:seeds) do
+          CONFIG[:payment_channel_seeds].map do |seed|
+            Stellar::Account.from_seed(seed)
+          end
+        end
+        let(:error) { Faraday::ClientError.new(nil, nil) }
+
+        it "returns the unsuccessful response" do
+          expect(stellar_client).to receive(:send_payment)
+            .and_raise(error)
+
+          expect do
+            described_class.execute(
+              stellar_client: stellar_client,
+              from: from,
+              to: to,
+              amount: amount,
+              memo: nil,
+              channel_account: channel_account,
+              next_sequence_number: 1,
+              tries: 2,
+              seeds: seeds,
+              horizon_url: CONFIG[:horizon_url],
+              redis_url: CONFIG[:redis_url],
+            )
+          end.to raise_error(error)
+        end
+      end
+
     end
   end
 end
