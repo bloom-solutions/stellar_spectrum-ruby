@@ -31,6 +31,8 @@ module StellarSpectrum
           sequence: c.next_sequence_number,
         )
       rescue Faraday::ClientError => e
+        fail if e.response.nil?
+
         if e.response[:status] == TIMEOUT_CODE
           retry_result = Retry.execute(
             stellar_client: c.stellar_client,
