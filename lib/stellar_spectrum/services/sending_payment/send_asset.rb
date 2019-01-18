@@ -30,7 +30,7 @@ module StellarSpectrum
           sequence: c.next_sequence_number,
         )
       rescue Faraday::ClientError => e
-        Log.write("#{Client::LOG_TAG}: Retrying SendingPayment::SendAsset - #{e.inspect}")
+        Log.write("Retrying SendingPayment::SendAsset - #{e.inspect}")
         retry_result = Retry.execute(
           stellar_client: c.stellar_client,
           from: c.from,

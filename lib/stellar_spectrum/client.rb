@@ -5,7 +5,6 @@ module StellarSpectrum
     attr_accessor :seeds
     attr_accessor :horizon_url
 
-    LOG_TAG = "[StellarSpectrum]"
     MAX_LOCK_TIME_IN_SECONDS = 120
 
     def initialize(
