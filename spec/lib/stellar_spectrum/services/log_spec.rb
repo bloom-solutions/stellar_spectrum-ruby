@@ -6,7 +6,7 @@ module StellarSpectrum
     context "with a logger" do
       it "does not return nil" do
         StellarSpectrum.configure { |c| c.logger = Logger.new("tmp/test.log") }
-        log_result = described_class.write("Hello")
+        log_result = described_class.warn("Hello")
         expect(log_result).not_to be_nil
       end
     end
@@ -14,7 +14,7 @@ module StellarSpectrum
     context "without a logger" do
       it "returns nil" do
         StellarSpectrum.configure {|c| c.logger = nil}
-        log_result = described_class.write("Hello")
+        log_result = described_class.warn("Hello")
         expect(log_result).to be_nil
       end
     end

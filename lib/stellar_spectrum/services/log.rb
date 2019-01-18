@@ -1,13 +1,19 @@
 module StellarSpectrum
   class Log
     
-    LOG_TAG = "[StellarSpectrum]"
+    TAG = "[StellarSpectrum]".freeze
+    LEVELS = [:debug, :warn, :info, :error, :fatal].freeze
 
-    def self.write(message)
-      logger = StellarSpectrum.configuration.logger
+    class << self
+      LOG_LEVELS.each do |level|
 
-      if logger
-        logger.warn("#{LOG_TAG}: #{message}")
+        define_method level do |message|
+          logger = StellarSpectrum.configuration.logger
+          if logger
+            logger.send(level, "#{LOG_TAG}: #{message}")
+          end
+        end
+
       end
     end
 

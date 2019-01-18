@@ -5,7 +5,7 @@ module StellarSpectrum
       account_info = stellar_client.account_info(channel_account)
       account_info.sequence.to_i
     rescue Faraday::ClientError => e
-      Log.write("Retrying GetCurrentSequenceNumber - #{e.inspect}")
+      Log.warn("Retrying GetCurrentSequenceNumber - #{e.inspect}")
       execute(stellar_client: stellar_client, channel_account: channel_account)
     end
 
