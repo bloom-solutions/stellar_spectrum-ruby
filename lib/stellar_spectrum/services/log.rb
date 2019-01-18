@@ -5,12 +5,12 @@ module StellarSpectrum
     LEVELS = [:debug, :warn, :info, :error, :fatal].freeze
 
     class << self
-      LOG_LEVELS.each do |level|
+      LEVELS.each do |level|
 
         define_method level do |message|
           logger = StellarSpectrum.configuration.logger
           if logger
-            logger.send(level, "#{LOG_TAG}: #{message}")
+            logger.send(level, "#{TAG}: #{message}")
           end
         end
 
