@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    stellar_spectrum (1.1.4)
+    stellar_spectrum (1.2.0)
       activesupport
       gem_config
       light-service
@@ -24,7 +24,7 @@ GEM
     byebug (10.0.2)
     citrus (3.0.2)
     coderay (1.1.2)
-    concurrent-ruby (1.1.3)
+    concurrent-ruby (1.1.4)
     contracts (0.16.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -40,7 +40,7 @@ GEM
       faraday_middleware (~> 0.9)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
-    ffi (1.9.25)
+    ffi (1.10.0)
     gem_config (0.3.1)
     hashdiff (0.3.7)
     hyperclient (0.9.0)
@@ -50,7 +50,7 @@ GEM
       faraday_middleware
       net-http-digest_auth
       uri_template
-    i18n (1.2.0)
+    i18n (1.5.2)
       concurrent-ruby (~> 1.0)
     light-service (0.11.0)
       activesupport (>= 3.0)
@@ -68,7 +68,7 @@ GEM
     rake (10.5.0)
     rbnacl (6.0.0)
       ffi
-    redis (4.0.3)
+    redis (4.1.0)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
