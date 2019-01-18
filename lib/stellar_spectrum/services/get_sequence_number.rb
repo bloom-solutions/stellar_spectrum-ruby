@@ -6,8 +6,10 @@ module StellarSpectrum
     promises :current_sequence_number, :next_sequence_number
 
     executed do |c|
-      account_info = c.stellar_client.account_info(c.channel_account)
-      c.current_sequence_number = account_info.sequence.to_i
+      c.current_sequence_number = GetCurrentSequenceNumber.execute(
+        stellar_client: c.stellar_client, 
+        channel_account: c.channel_account
+      )
 
       c.next_sequence_number = c[:force_sequence_number] ||
         c.current_sequence_number + 1
