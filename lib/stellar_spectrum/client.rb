@@ -4,7 +4,6 @@ module StellarSpectrum
     attr_accessor :redis_url
     attr_accessor :seeds
     attr_accessor :horizon_url
-    attr_accessor :logger
 
     LOG_TAG = "[StellarSpectrum]"
     MAX_LOCK_TIME_IN_SECONDS = 120
@@ -12,13 +11,11 @@ module StellarSpectrum
     def initialize(
       redis_url: StellarSpectrum.configuration.redis_url,
       seeds: StellarSpectrum.configuration.seeds,
-      horizon_url: StellarSpectrum.configuration.horizon_url,
-      logger: StellarSpectrum.configuration.logger
+      horizon_url: StellarSpectrum.configuration.horizon_url
     )
       self.redis_url = redis_url
       self.seeds = seeds
       self.horizon_url = horizon_url
-      self.logger = logger
     end
 
     def send_payment(
@@ -41,10 +38,6 @@ module StellarSpectrum
         force_sequence_number: sequence,
         force_lock: false,
       )
-
-      # if result.failure?
-        # return false
-      # end
 
       result.send_asset_response
     end

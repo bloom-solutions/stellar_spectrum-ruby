@@ -33,14 +33,11 @@ RSpec.describe StellarSpectrum do
     end
 
     context "config specified" do
-      let(:logger_0) { Logger.new("tmp/log0.log") }
-      let(:logger_1) { Logger.new("tmp/log1.log") }
       before do
         StellarSpectrum.configure do |c|
           c.redis_url = "readdes"
           c.seeds = %w(S1)
           c.horizon_url = "h.com"
-          c.logger = logger_0
         end
       end
 
@@ -48,13 +45,11 @@ RSpec.describe StellarSpectrum do
         client = described_class.new({
           redis_url: "redis",
           seeds: %w(S2),
-          horizon_url: "ho.com",
-          logger: logger_1,
+          horizon_url: "ho.com"
         })
         expect(client.redis_url).to eq "redis"
         expect(client.seeds).to match_array(%w(S2))
         expect(client.horizon_url).to eq "ho.com"
-        expect(client.logger).to eq logger_1
       end
     end
 
@@ -74,7 +69,6 @@ RSpec.describe StellarSpectrum do
         expect(client.redis_url).to eq "readdes"
         expect(client.seeds).to match_array(%w(S1))
         expect(client.horizon_url).to eq "h.com"
-        expect(client.logger).to eq logger
       end
     end
   end

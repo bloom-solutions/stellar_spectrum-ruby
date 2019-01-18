@@ -18,8 +18,7 @@ module StellarSpectrum
       client = described_class.new(
         redis_url: CONFIG[:redis_url],
         seeds: CONFIG[:payment_channel_seeds],
-        horizon_url: CONFIG[:horizon_url],
-        logger: Logger.new("tmp/test.log"),
+        horizon_url: CONFIG[:horizon_url]
       )
 
       tx = client.send_payment(
@@ -44,8 +43,7 @@ module StellarSpectrum
       client = described_class.new(
         redis_url: CONFIG[:redis_url],
         seeds: CONFIG[:payment_channel_seeds],
-        horizon_url: CONFIG[:horizon_url],
-        logger: Logger.new("tmp/test.log"),
+        horizon_url: CONFIG[:horizon_url]
       )
 
       tx = client.send_payment(
@@ -71,8 +69,7 @@ module StellarSpectrum
         client = described_class.new(
           redis_url: CONFIG[:redis_url],
           seeds: CONFIG[:payment_channel_seeds],
-          horizon_url: CONFIG[:horizon_url],
-          logger: Logger.new("tmp/test.log"),
+          horizon_url: CONFIG[:horizon_url]
         )
 
         original_destination_balance = stellar_client.
