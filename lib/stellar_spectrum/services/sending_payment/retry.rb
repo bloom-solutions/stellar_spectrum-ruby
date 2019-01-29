@@ -18,10 +18,9 @@ module StellarSpectrum
       ]
       expects *EXPECTS
       promises :send_asset_response
-      WAIT_TIME_IN_SECONDS = 5
 
       executed do |c|
-        sleep WAIT_TIME_IN_SECONDS
+        sleep Fibo.(c.tries)
 
         args = EXPECTS.each_with_object({}) do |attr, hash|
           hash[attr] = c.send(attr)
