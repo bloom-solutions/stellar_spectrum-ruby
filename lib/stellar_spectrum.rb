@@ -7,6 +7,7 @@ require "redis"
 require "active_support/core_ext/hash/except"
 require "active_support/core_ext/object/blank"
 require 'active_support/core_ext/integer/inflections'
+require "stellar_spectrum/services/fibo"
 require "stellar_spectrum/services/get_available_channels"
 require "stellar_spectrum/services/get_channel_account_info"
 require "stellar_spectrum/services/get_channel_accounts"
