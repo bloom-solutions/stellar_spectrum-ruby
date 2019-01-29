@@ -25,6 +25,15 @@ RSpec.describe StellarSpectrum do
       StellarSpectrum.configure {|c| c.logger = logger}
       expect(StellarSpectrum.configuration.logger).to eq(logger)
     end
+
+    it "allows setting of max_tries, defaulting " \
+      "to #{described_class::DEFAULT_MAX_TRIES}" do
+
+      expect(StellarSpectrum.configuration.max_tries).
+        to eq described_class::DEFAULT_MAX_TRIES
+      StellarSpectrum.configuration.max_tries = 20
+      expect(StellarSpectrum.configuration.max_tries).to eq 20
+    end
   end
 
   describe ".new" do

@@ -213,6 +213,43 @@ module StellarSpectrum
         end
       end
 
+      context "any Faraday::ClientError is raised, >= max_tries" do
+        let(:from) { Stellar::Account.random }
+        let(:to) { Stellar::Account.random }
+        let(:amount) { Stellar::Amount.new(1) }
+        let(:channel_account) { Stellar::Account.random }
+        let(:seeds) { CONFIG[:payment_channel_seeds] }
+        let(:horizon_url) { CONFIG[:horizon_url] }
+        let(:redis_url) { CONFIG[:redis_url] }
+        let(:error) { Faraday::ClientError.new(nil, nil) }
+        let(:retry_result) do
+          LightService::Context.new(send_asset_response: double)
+        end
+
+        it "raises the error" do
+          expect(stellar_client).to receive(:send_payment).
+            and_raise(error)
+
+          expect(Retry).to_not receive(:execute)
+
+          expect do
+            described_class.execute(
+              stellar_client: stellar_client,
+              from: from,
+              to: to,
+              amount: amount,
+              memo: nil,
+              channel_account: channel_account,
+              next_sequence_number: 1,
+              tries: StellarSpectrum.configuration.max_tries,
+              seeds: seeds,
+              horizon_url: horizon_url,
+              redis_url: redis_url,
+            )
+          end.to raise_error(error)
+        end
+      end
+
     end
   end
 end

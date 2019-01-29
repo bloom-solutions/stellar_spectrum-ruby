@@ -7,6 +7,7 @@ require "redis"
 require "active_support/core_ext/hash/except"
 require "active_support/core_ext/object/blank"
 require 'active_support/core_ext/integer/inflections'
+require "stellar_spectrum/services/fibo"
 require "stellar_spectrum/services/get_available_channels"
 require "stellar_spectrum/services/get_channel_account_info"
 require "stellar_spectrum/services/get_channel_accounts"
@@ -32,11 +33,16 @@ module StellarSpectrum
 
   include GemConfig::Base
 
+  # 17 tries means this gem will try up to about 17 times before
+  # giving up, and letting the error bubble up
+  DEFAULT_MAX_TRIES = 17.freeze
+
   with_configuration do
     has :redis_url, classes: [NilClass, String]
     has :seeds, classes: [NilClass, Array]
     has :horizon_url, classes: [NilClass, String]
     has :logger
+    has :max_tries, classes: [Integer], default: DEFAULT_MAX_TRIES
   end
 
   def self.new(*args)
