@@ -20,7 +20,7 @@ module StellarSpectrum
       promises :send_asset_response
 
       executed do |c|
-        sleep Fibo.(c.tries)
+        sleep GetSleepForRetry.(c.tries)
 
         args = EXPECTS.each_with_object({}) do |attr, hash|
           hash[attr] = c.send(attr)
