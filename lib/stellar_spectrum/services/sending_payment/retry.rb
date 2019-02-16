@@ -34,7 +34,7 @@ module StellarSpectrum
         # fail_and_return for now until we figure out a way to stop all actions
         # from reduce_if
         # See https://github.com/adomokos/light-service/pull/164
-        message = "Closing try #{c.tries}"
+        message = "Closing #{c.tries.ordinalize} try"
         c.fail_and_return! message
       end
 
