@@ -30,9 +30,19 @@ module StellarSpectrum
           sequence: c.next_sequence_number,
         )
       rescue Faraday::ClientError => e
-        fail if c.tries >= StellarSpectrum.configuration.max_tries
+        max_tries = StellarSpectrum.configuration.max_tries
+        if c.tries >= max_tries
+          Log.warn(
+            "Surpassed maximum number of tries of #{max_tries}, " \
+            "stop retrying"
+          )
+          fail
+        end
 
-        Log.warn("Retrying SendingPayment::SendAsset - #{e.inspect}")
+        Log.warn(
+          "Retrying (#{c.tries.ordinalize} time) " \
+          "SendingPayment::SendAsset - #{e.inspect}"
+        )
         retry_result = Retry.execute(
           stellar_client: c.stellar_client,
           from: c.from,

@@ -20,7 +20,7 @@ module StellarSpectrum
       promises :send_asset_response
 
       executed do |c|
-        sleep Fibo.(c.tries)
+        sleep GetSleepForRetry.(c.tries)
 
         args = EXPECTS.each_with_object({}) do |attr, hash|
           hash[attr] = c.send(attr)
@@ -34,7 +34,7 @@ module StellarSpectrum
         # fail_and_return for now until we figure out a way to stop all actions
         # from reduce_if
         # See https://github.com/adomokos/light-service/pull/164
-        message = "Closing try #{c.tries}"
+        message = "Closing #{c.tries.ordinalize} try"
         c.fail_and_return! message
       end
 
